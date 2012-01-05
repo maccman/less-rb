@@ -8,7 +8,9 @@ The **dynamic** stylesheet language.
 about
 -----
 
-These are Ruby bindings for the next generation LESS, which is implemented in JavaScript
+These are Ruby bindings for the next generation LESS, which is implemented in JavaScript.
+
+These are seperate from the [official bindings](https://github.com/cowboyd/less.rb), as they've been ported to [ExecJS](https://github.com/sstephenson/execjs). This means you don't have to re-compile v8 every deploy.
 
 For more information, visit <http://lesscss.org>.
 
@@ -29,13 +31,3 @@ Once you have a parser instantiated, you can parse code to get your AST !
     tree = parser.parse(".class {width: 1+1}") # => Less::Tree
     tree.to_css #=> .class {\n  width: 2;\n}\n
     tree.to_css(:compress => true) #=> .class{width:2;}
-
-license
--------
-
-less.rb is licensed under the same terms as less.js
-
-See `lib/js/LICENSE` file.
-
-
-> copyright 2011 Charles Lowell
