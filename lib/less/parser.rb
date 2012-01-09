@@ -1,6 +1,6 @@
 module Less
   # Convert lesscss source into an abstract syntax Tree
-  class Parser    
+  class Parser
     class << self
       def backend
         @backend ||= ExecJS::ExternalRuntime.new(
@@ -10,7 +10,7 @@ module Less
         )
       end
     end
-    
+
     # Construct and configure new Less::Parser
     #
     # @param [Hash] opts configuration options
@@ -27,7 +27,7 @@ module Less
     def parse(less)
       Tree.new @context.call("render", less, @options)
     end
-    
+
     protected
       def compiler_source
         File.read(File.expand_path("../compiler.js", __FILE__))
