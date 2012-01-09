@@ -19,7 +19,9 @@ describe Less::Parser do
   end
 
   describe "when configured with multiple load paths" do
-    before {@parser = Less::Parser.new :paths => [cwd.join('one'), cwd.join('two')]}
+    before {
+      @parser = Less::Parser.new(:paths => [cwd.join('one'), cwd.join('two')])
+    }
 
     it "will load files from both paths" do
       @parser.parse('@import "one.less";').to_css.gsub(/\n/,'').strip.should eql ".one {  width: 1;}"
