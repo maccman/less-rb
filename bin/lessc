@@ -12,11 +12,9 @@ Usage:
 help
 end
 
-# First off, let's show help some help if no arguments and tty
 if ($stdin.tty? && ARGV.empty?) || ARGV.delete('-h') || ARGV.delete('--help')
   help
 else
-  # Well, lets read those files
   doc = ARGF.read
   parser = Less::Parser.new
   tree = parser.parse(doc)
