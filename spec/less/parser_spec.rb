@@ -14,13 +14,14 @@ describe Less::Parser do
       subject.parse(".class {width: 1+1}").to_css(:compress => true).strip.should eql ".class{width:2;}"
     end
   end
+
   it "throws a ParseError if the lesscss is bogus" do
-    expect {subject.parse('{^)')}.should raise_error(Less::ParseError)
+    expect {subject.parse('{^)').to_css}.should raise_error(Less::ParseError)
   end
 
   describe "when configured with multiple load paths" do
     before {
-      @parser = Less::Parser.new(:paths => [cwd.join('one'), cwd.join('two')])
+      @parser = Less::Parser.new(:paths => [cwd.join('one').to_s, cwd.join('two').to_s])
     }
 
     it "will load files from both paths" do
@@ -31,8 +32,8 @@ describe Less::Parser do
 
   describe "when load paths are specified in as default options" do
     before do
-      Less.paths << cwd.join('one')
-      Less.paths << cwd.join('two')
+      Less.paths << cwd.join('one').to_s
+      Less.paths << cwd.join('two').to_s
       @parser = Less::Parser.new
     end
     after do

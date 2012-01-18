@@ -1,4 +1,6 @@
 module Less
+  class ParseError < StandardError; end
+
   # Convert lesscss source into an abstract syntax Tree
   class Parser
     class << self
@@ -25,7 +27,7 @@ module Less
     # @param [String] less the source to parse
     # @return [Less::Tree] the parsed tree
     def parse(less)
-      Tree.new @context.call("render", less, @options)
+      Tree.new(less, @context, @options)
     end
 
     protected
@@ -36,12 +38,16 @@ module Less
 
   # Abstract LessCSS syntax tree Less. Mainly used to emit CSS
   class Tree
-    def initialize(result)
-      @result = result
+    def initialize(less, context, options)
+      @less    = less
+      @context = context
+      @options = options
     end
 
     def to_css(options = {})
-      @result
+      @result ||= @context.call("render", @less, @options.merge(options))
+    rescue ExecJS::ProgramError => e
+      raise ParseError.new(e.message)
     end
   end
 end

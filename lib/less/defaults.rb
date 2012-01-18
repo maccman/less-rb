@@ -1,6 +1,5 @@
 module Less
   module Defaults
-
     def defaults
       @defaults ||= {:paths => []}
     end
